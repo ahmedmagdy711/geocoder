@@ -61,6 +61,17 @@ module Geocoder::Result
       address_data['Country']
     end
 
+    def county
+      fail unless d = address_data['AdditionalData']
+      if v = d.find{|ad| ad['key']=='CountyName'}
+        return v['value']
+      end
+    end
+
+    def county_code
+      address_data['County']
+    end
+
     def viewport
       map_view = data['Location']['MapView'] || fail
       south = map_view['BottomRight']['Latitude']
